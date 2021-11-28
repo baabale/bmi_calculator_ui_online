@@ -14,4 +14,17 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
-"# bmi_calculator_ui_online" 
+"# bmi_calculator_ui_online"
+
+Assignment
+
+1. Weight & Age Section
+2. BMI Formula: weight (kg) / height (m^2)
+   void calculateBMI() {
+   double height = 160; // in CM
+   double weight = 80; // kg
+
+double result = weight / pow((height/100), 2);
+
+print(result.toStringAsFixed(1));
+} 3. Pass the result data into the ResultScreen
