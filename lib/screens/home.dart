@@ -4,6 +4,7 @@ import 'package:bmi_calculator/widgets/custom_button.dart';
 import 'package:bmi_calculator/widgets/reusable_card.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:math';
 
 //ENUMERATIONS
 
@@ -18,7 +19,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double height = 180;
+  int weight = 60;
+  int age = 18;
   Gender selectedGender = Gender.male;
+
+  double calculateBMI() {
+    double result = weight / pow((height / 100), 2);
+    return result;
+  }
+
+  void onNavigate() {
+    double bmiResult = calculateBMI();
+
+    // print(bmiResult);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ResultScreen(result: bmiResult)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         : kPrimaryColor,
                     onPressed: () {
                       selectedGender = Gender.male;
-                      print('MALE selected');
                       setState(() {});
                     },
                     child: Column(
@@ -63,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         : kPrimaryColor,
                     onPressed: () {
                       selectedGender = Gender.female;
-                      print('FEMALE selected');
                       setState(() {});
                     },
                     child: Column(
@@ -131,11 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       min: 10,
                       max: 300,
                       value: height,
-                      onChanged: (value) {
-                        height = value;
-                        print(height);
-                        setState(() {});
-                      },
+                      onChanged: (value) => setState(() => height = value),
                     ),
                   ),
                 ],
@@ -156,7 +169,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '60',
+                          // weight.toString(),
+                          '$weight', // String interpolation
                           style: TextStyle(
                             fontSize: 44,
                             color: Colors.white,
@@ -168,7 +182,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (weight > 1) {
+                                  setState(() => weight--);
+                                }
+                              },
                               child: Icon(FontAwesomeIcons.minus),
                               fillColor: Colors.grey,
                               shape: CircleBorder(),
@@ -179,7 +197,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(width: 10),
                             RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  weight++;
+                                });
+                              },
                               child: Icon(FontAwesomeIcons.plus),
                               fillColor: Colors.grey,
                               shape: CircleBorder(),
@@ -205,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 8),
                         Text(
-                          '20',
+                          age.toString(),
                           style: TextStyle(
                             fontSize: 44,
                             color: Colors.white,
@@ -217,7 +239,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                if (age > 1) {
+                                  setState(() => age--);
+                                }
+                              },
                               child: Icon(FontAwesomeIcons.minus),
                               fillColor: Colors.grey,
                               shape: CircleBorder(),
@@ -228,7 +254,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(width: 10),
                             RawMaterialButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  age++;
+                                });
+                              },
                               child: Icon(FontAwesomeIcons.plus),
                               fillColor: Colors.grey,
                               shape: CircleBorder(),
@@ -248,12 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           CustomButton(
             title: 'Calculate',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ResultScreen()),
-              );
-            },
+            onPressed: onNavigate,
           ),
         ],
       ),

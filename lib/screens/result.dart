@@ -4,7 +4,9 @@ import 'package:bmi_calculator/widgets/reusable_card.dart';
 import 'package:flutter/material.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({Key? key}) : super(key: key);
+  const ResultScreen({Key? key, required this.result}) : super(key: key);
+
+  final double result;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class ResultScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    '21.5',
+                    result.toStringAsFixed(1),
                     style: TextStyle(
                       fontSize: 56,
                       fontWeight: FontWeight.w500,
